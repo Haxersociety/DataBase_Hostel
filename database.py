@@ -13,7 +13,7 @@ def create_tables():
                   id_status INTEGER NOT NULL, 
                   class TEXT NOT NULL,
                   cost INTEGER NOT NULL,
-                  number_of_bed INTEGER NOT NULL
+                  number_of_bed TEXT NOT NULL
                   )''')
 
     # Создаем таблицу постояльцев.
@@ -33,16 +33,17 @@ def create_tables():
                   type TEXT NOT NULL
                   )''')
 
-    # Создаем табоицу состояний.
+    # Создаем таблицу состояний.
     cursor.execute('''CREATE TABLE IF NOT EXISTS Status
                   (id INTEGER NOT NULL PRIMARY KEY, 
                   status_code INTEGER NOT NULL, 
                   time_change TEXT NOT NULL,
                   date_change TEXT NOT NULL,
-                  id_employee INTEGER NOT NULL
+                  id_working_employee INTEGER NOT NULL,
+                  FOREIGN KEY(id_working_employee) REFERENCES Working_Employee(id)
                   )''')
 
-    # Создаем табоицу броней.
+    # Создаем таблицу броней.
     cursor.execute('''CREATE TABLE IF NOT EXISTS Reservation
                   (id INTEGER NOT NULL PRIMARY KEY, 
                   id_resident INTEGER NOT NULL, 
@@ -52,7 +53,7 @@ def create_tables():
                   prepay INTEGER NOT NULL
                   )''')
 
-    # Создаем табоицу сотрудников.
+    # Создаем таблицу сотрудников.
     cursor.execute('''CREATE TABLE IF NOT EXISTS Employee
                   (id INTEGER NOT NULL PRIMARY KEY, 
                   name TEXT NOT NULL, 
@@ -61,7 +62,7 @@ def create_tables():
                   passport_details TEXT NOT NULL
                   )''')
 
-    # Создаем табоицу работающих сотрудников.
+    # Создаем таблицу работающих сотрудников.
     cursor.execute('''CREATE TABLE IF NOT EXISTS Working_Employee
                   (id INTEGER NOT NULL PRIMARY KEY, 
                   id_employee INTEGER NOT NULL, 
@@ -72,6 +73,29 @@ def create_tables():
 
 
 create_tables()
+
+# Заполнение данными таблицу комнат
+rooms = open('data/room.txt')
+for line in rooms:
+    separate_line = line.split('/')
+    for i in range(int(separate_line[0])):
+        data = separate_line[1]+','+separate_line[2]+','+separate_line[3]+','+separate_line[4]
+        cursor.execute(f'''INSERT INTO Room
+            (id_status, class, cost, number_of_bed)
+            VALUES({data})
+            ''')
+
+# Заполнение данными таблицу комнат
+rooms = open('data/room.txt')
+for line in rooms:
+    separate_line = line.split('/')
+    for i in range(int(separate_line[0])):
+        data = separate_line[1]+','+separate_line[2]+','+separate_line[3]+','+separate_line[4]
+        cursor.execute(f'''INSERT INTO Room
+            (id_status, class, cost, number_of_bed)
+            VALUES({data})
+            ''')
+
 
 connection.commit()
 connection.close()
