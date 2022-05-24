@@ -1,0 +1,4 @@
+"Cleared"
+"Polluted"
+"Inhabited"
+"Evicted"

@@ -1,0 +1,4 @@
+"Standard"/700/300
+"Luxe"/1200/400
+"Premium"/2000/600
+"President"/3000/1200
