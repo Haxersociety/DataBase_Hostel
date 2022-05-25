@@ -70,8 +70,7 @@ def create_tables():
     cursor.execute('''CREATE TABLE IF NOT EXISTS Working_Employee
                   (id INTEGER NOT NULL PRIMARY KEY, 
                   id_employee INTEGER NOT NULL, 
-                  shift_start_date TEXT NOT NULL,
-                  shift_start_time TEXT NOT NULL,
+                  shift_start_date_time TEXT NOT NULL,
                   shift_time TEXT DEFAULT NULL,
                   FOREIGN KEY (id_employee) REFERENCES Employee (id)
                   )''')
@@ -144,9 +143,9 @@ def fill_tables():
     working_employee = open('data/working_employee.txt')
     for line in working_employee:
         separate_line = line.split('/')
-        data = separate_line[0] + ',' + separate_line[1] + ',' + separate_line[2] + ',' + separate_line[3]
+        data = separate_line[0] + ',' + separate_line[1] + ',' + separate_line[2]
         cursor.execute(f'''INSERT INTO Working_Employee
-            (id_employee, shift_start_date, shift_start_time, shift_time)
+            (id_employee, shift_start_date_time, shift_time)
             VALUES({data})
             ''')
 
